@@ -1,0 +1,277 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <iomanip>
+#include <limits>
+
+using namespace std;
+void shuffle(int[][4]);
+
+int main()
+{
+    int cards[4][4];
+    int row_of_card1;
+    int col_of_card1;
+    int row_of_card2;
+    int col_of_card2;
+    long moves;
+    int same_card = 1;
+    char f,answer = 'y';
+    bool card_condition[4][4];
+    bool End_of_the_game = false;
+
+    do{
+    moves = 0;
+
+    /*srand((unsigned)time(NULL));
+
+
+/// fill the board by the generate random number.
+
+    for(int i = 0; i < 4; i++){
+        for (int j = 0; j < 4; j++){
+            cards[i][j] = rand()%8+1;
+            //cout << cards[i][j];
+        }
+            //cout << endl;
+    }*/
+
+    shuffle(cards);
+
+    cout << "<<<< Ahln beek ya user ya habibi , 2tmna mn kol 2lby 2nk tnbst w t3gbk l le3ba >>>>";
+    cout << endl;
+    cout << endl;
+    cout << "<<<< Bs talby l wa7eed 2nk tkon mo7trm w t2dar ta3by >>>>";
+    cout << endl;
+    cout << endl;
+
+
+    cout << "   1  2  3  4 \n";
+    cout << "  ";
+    for (int i = 0; i <= 14; i++){
+        cout << "-";
+    }
+    cout << endl;
+    for (int i = 0; i < 4; i++){
+        cout << i+1 << "|";
+        for (int j = 0; j < 4; j++){
+            cout << setw(3) << "*";
+            card_condition[i][j]= false;
+        }
+        cout << endl;
+    }
+        cout << endl;
+
+
+
+    do{/// Start of the game.
+
+            do{/// Enter the details of the first card from the user.
+
+                    do{/// Check if the inputs is correct.
+
+    if(cin.fail()){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "<<<< 2olna blash 2lt 2db w e7trm nfsk , ana t3bt 3shan 23ml l le3ba de. >>>>" << endl;
+            cout << endl;
+    }
+    cout << "Please enter the row and column of the first card separate each of them by a comma.\n";
+    cin >> row_of_card1 >> f >> col_of_card1;
+
+                      }while((cin.fail()) || (row_of_card1 > 4) || (col_of_card1 > 4));
+
+
+
+
+    if(card_condition[row_of_card1 - 1][col_of_card1 - 1] == true){
+            cout << "This card is flipped,choose another one." << endl;
+            //continue;
+    }
+            }while(card_condition[row_of_card1 - 1][col_of_card1 - 1] != false);
+
+            do{/// Enter the details of the second card from the user.
+
+                    do{///Check if the inputs is correct.
+    if(cin.fail()){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "2olna blash 2lt 2db w e7trm nfsk , ana t3bt 3shan 23ml l le3ba de." << endl;
+            cout << endl;
+    }
+    cout << "Please enter the row and column of the second card separate each of them by a comma.\n";
+    cin >> row_of_card2 >> f >> col_of_card2;
+                     }while((cin.fail()) || (row_of_card1 > 4) || (col_of_card1 > 4));
+
+
+
+
+    if(card_condition[row_of_card2 - 1][col_of_card2 - 1] == true){
+            cout << "This card is flipped,choose another one." << endl;
+    }
+    if((row_of_card1 == row_of_card2) && (col_of_card1 == col_of_card2)){
+            cout << "You can't choose the same card" << endl;
+            same_card = 0;
+            continue;
+    }
+            }while(card_condition[row_of_card2 - 1][col_of_card2 - 1] != false);
+
+
+/// Reformulate the data.
+
+    row_of_card1--;
+    col_of_card1--;
+    row_of_card2--;
+    col_of_card2--;
+
+/// reveal the board.
+
+    cout << "   1  2  3  4 \n";
+    cout << "  ";
+    for (int i = 0; i <= 14; i++){
+        cout << "-";
+    }
+        cout << endl;
+    for (int i = 0; i < 4; i++){
+        cout << i+1 << "|";
+
+        for (int j = 0; j < 4; j++){
+            if((i == row_of_card1) && (j == col_of_card1)){
+                cout << setw(3) << cards[i][j];
+            }
+            else if((i == row_of_card2) && (j == col_of_card2)){
+                cout << setw(3) << cards [i][j];
+            }
+
+            else if(card_condition[i][j] == true){
+                cout << setw(3) << cards [i][j];
+            }
+            /*else if(card_condition[i][j] == false){
+                cout << " * " << " ";
+            }*/
+            else{
+                cout << setw(3) << "*";
+            }
+
+        }
+            cout << endl;
+    }
+
+/// if the two cards is matched.
+
+        if((cards[row_of_card1][col_of_card1] == cards[row_of_card2][col_of_card2] ) && (same_card != 0)){
+                cout << "Cards Matched!" << endl;
+                card_condition[row_of_card1][col_of_card1] = true;
+                card_condition[row_of_card2][col_of_card2] = true;
+        }
+       cin.get();
+       cin.get();
+       for (int i = 0; i <= 20; i++){
+        cout << endl;
+       }
+
+/// reprint the board.
+        cout << "   1  2  3  4 \n";
+        cout << "  ";
+        for (int i = 0; i <= 14; i++){
+        cout << "-";
+        }
+        cout << endl;
+        for (int i = 0; i < 4; i++){
+                cout << i+1 << "|";
+            for (int j = 0; j < 4; j++){
+                if(card_condition[i][j] == true){
+                    cout << setw(3) << cards[i][j];
+                }
+                else{
+                    cout << setw(3) << "*";
+                }
+            }
+            cout << endl;
+        }
+        End_of_the_game = true;
+
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                if (card_condition[i][j] == false){
+                    End_of_the_game = false;
+                    break;
+                }
+            }
+            if(End_of_the_game == false){
+                break;
+            }
+        }
+        moves++;
+    }while(End_of_the_game != true);
+        cout << "Congratulations,you won!!!" << endl;
+        cout << "It required " << moves << " move to finish." << endl << endl;
+        cout << "would you like to play again? (y=Yes/n=No) : ";
+        answer = cin.get();
+    }while(answer == 'y' || answer == 'Y');
+    cin.get();
+
+    return 0;
+}
+void shuffle(int cards[][4]){
+
+    int start[16]={1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8};
+
+    for (int s=0; s<=20; s++)
+
+    {
+
+        for (int x=0; x<16; x++)
+
+        {
+
+            srand((unsigned)time(NULL));
+
+            int i=rand()%15+1;
+
+            int temp=start[x];
+
+            start[x]=start[i];
+
+            start[i]=temp;
+
+        }
+
+    }
+
+    int i=0;
+
+    for (int r=0; r<4; r++) // put values in cards here
+
+        {
+
+            for (int c=0; c<4; c++)
+
+            {
+
+                cards[r][c]=start[i];
+
+                //cout<<cards[r][c];
+
+                i=i+1;
+
+            }
+
+            cout<<endl;
+
+        }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
